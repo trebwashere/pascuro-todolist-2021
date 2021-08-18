@@ -1,26 +1,34 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectToDoById, RemoveToDoFromState,ToggleToDoFromState } from '../reducers/todoSlice';
+import { updateToDo, deleteToDo } from '../../apis/todos'
+import { Button } from 'antd';
 
 
 function ToDoItem(props) {
     
     const dispatch = useDispatch();
     const todo = useSelector((state) => selectToDoById(state, props.toDoId))
-    var todoItemClass = todo.isDone? 'todo-item-done' : 'todo-item';
+    var todoItemClass = todo.done? 'todo-item-done' : 'todo-item';
 
     function RemoveToDo(e) {
-        dispatch(RemoveToDoFromState(props.toDoId))
+        deleteToDo(todo.id)
+        .then((response) => {
+            dispatch(RemoveToDoFromState(response.data))
+        })
         e.stopPropagation()
     }
 
-    function ToggleToDo(e) {
-        dispatch(ToggleToDoFromState(props.toDoId))
+    function ToggleToDo() {
+        updateToDo(todo.id, !todo.done)
+        .then((response) => {
+            dispatch(ToggleToDoFromState(response.data))
+        })
     }
 
     return (
         <div class="todo-div" onClick={ToggleToDo}>
-            <span className={todoItemClass}>{todo.text}</span><button onClick={RemoveToDo}>X</button>
+            <span className={todoItemClass}>{todo.text}</span><Button type="danger" onClick={RemoveToDo}>X</Button>
         </div>
     );
 }

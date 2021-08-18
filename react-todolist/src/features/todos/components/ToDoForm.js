@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { AddToDoFromState } from '../reducers/todoSlice'
+import { addToDos } from '../../apis/todos'
+import { Button,Input } from 'antd'
 
 function ToDoForm() {
     const[text, setText] = useState('');
@@ -8,16 +10,21 @@ function ToDoForm() {
 
     function handleTextChange(e) {
         setText(e.target.value)
-        console.log(text)
     }
 
     function AddToDo() {
-        dispatch(AddToDoFromState(text))
+        addToDos(text).then((response) => {
+            dispatch(AddToDoFromState(response.data))
+        }).catch((response) => console.log(response))
+        setText('')
     }
     return (
         <div>
-            <input type="text" placeholder="Input new Todo..." value={text} onChange={handleTextChange}/>
-            <button onClick={AddToDo}>Add</button>
+            <div class="textBox">
+                <Input.TextArea size="large" placeholder="Input new Todo..." value={text} onChange={handleTextChange} onPressEnter={AddToDo}/>
+            </div><br/>
+
+            <Button type="primary" onClick={AddToDo}>Add ToDo!</Button>
         </div>
     )
 }
