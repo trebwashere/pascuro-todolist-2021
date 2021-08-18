@@ -16,12 +16,11 @@ function ToDoItem(props) {
 
     function ToggleToDo(e) {
         dispatch(ToggleToDoFromState(props.toDoId))
-        e.stopPropagation()
     }
 
     return (
         <div class="todo-div" onClick={ToggleToDo}>
-            <span className={todoItemClass} onClick={ToggleToDo}>{todo.text}</span><button onClick={RemoveToDo}>X</button>
+            <span className={todoItemClass}>{todo.text}</span><button onClick={RemoveToDo}>X</button>
         </div>
     );
 }
