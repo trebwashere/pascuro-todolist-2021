@@ -13,17 +13,17 @@ function ToDoForm() {
     }
 
     function AddToDo() {
-        addToDos(text).then((response) => {
+        let todoToAdd = {text: text, done: false}
+        addToDos(todoToAdd).then((response) => {
             dispatch(AddToDoFromState(response.data))
         }).catch((response) => console.log(response))
         setText('')
     }
     return (
         <div>
-            <div class="textBox">
+            <div className="textBox">
                 <Input.TextArea size="large" placeholder="Input new Todo..." value={text} onChange={handleTextChange} onPressEnter={AddToDo}/>
             </div><br/>
-
             <Button type="primary" onClick={AddToDo}>Add ToDo!</Button>
         </div>
     )
