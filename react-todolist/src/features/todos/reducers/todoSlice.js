@@ -4,19 +4,8 @@ import { v4 as uuid } from 'uuid';
 
 const toDoAdapter = createEntityAdapter();
 const initialState = toDoAdapter.getInitialState({
-    ids: [1,2],
-    entities: {
-        1: {
-            id: 1,
-            text: 'test to do',
-            done: false,
-        },
-        2: {
-            id: 2,
-            text: 'Hello react',
-            done: false,
-        }
-    }
+    ids: [],
+    entities: {},
 })
 
 const toDoSlice = createSlice({
@@ -24,13 +13,16 @@ const toDoSlice = createSlice({
     initialState,
     reducers: {
         AddToDoFromState(state, action) {
-            toDoAdapter.addOne(state, action.payload)
+            toDoAdapter.addOne(state, {
+                id: action.payload.id,
+                text: action.payload.text,
+                done: action.payload.done
+            })
         },
         AddAllToDoFromState(state, action) {
             toDoAdapter.addMany(state, action.payload)
         },
         ToggleToDoFromState(state, action) {
-            console.log(action)
             toDoAdapter.updateOne(state, {
                 id: action.payload.id,
                 changes: action.payload
