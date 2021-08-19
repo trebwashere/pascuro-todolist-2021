@@ -9,14 +9,14 @@ function App() {
     <div className="App">
       <BrowserRouter>
         {<ul>
-          <Link to="/todo">To-Do List</Link><br/>
+          <Link to="/todos">To-Do List</Link><br/>
           <Link to="/todoDone">Completed To-Do List</Link>
         </ul>}
         {<Switch>
           <Route exact path="/">
-            <Redirect to="/todo" />
+            <Redirect to="/todos" />
           </Route>
-          <Route exact path="/todo" component={ToDoList}/>
+          <Route exact path="/todos" component={ToDoList}/>
           <Route exact path="/todoDone" component={ToDoDoneList}/>
           <Route path="*" component={NotFoundPage}/>
         </Switch>
