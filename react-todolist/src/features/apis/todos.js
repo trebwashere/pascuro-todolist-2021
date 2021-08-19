@@ -5,11 +5,11 @@ export const getToDos = () => {
 }
 
 export const addToDos = (text) => {
-    return api.post('/todos', {text})
+    return api.post('/todos', text)
 }
 
 export const updateToDo = (id,done) => {
-    return api.put(`/todos/${id}`, {done})
+    return api.put(`/todos/${id}`, done)
 }
 
 export const deleteToDo = (id) => {
